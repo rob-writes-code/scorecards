@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scorecards</title>
-</head>
+{% block content %}
 
-<body>
-    <h1>Hello, World!</h1>
-    <p>{{ content }}</p>
-    {% for i in range(5) %}
-        {% if i % 2 == 0 %}
-            <p>{{i}}</p>
-        {% endif %}
-    {% endfor %}
-</body>
+<h2>This is the index</h2>
 
-</html>
+{% endblock %}
