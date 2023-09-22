@@ -61,6 +61,18 @@
 				<fk_column name="division_id" pk="id" />
 			</fk>
 		</table>
+		<table name="penalties" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="penalised_team_id" type="integer" jt="4" />
+			<column name="penalty_reason" type="varchar" length="100" jt="12" />
+			<column name="point_deduction" type="integer" jt="4" />
+			<index name="pk_penalties" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_penalties_teams" to_schema="scorecards" to_table="teams" >
+				<fk_column name="penalised_team_id" pk="id" />
+			</fk>
+		</table>
 		<table name="teams" prior="tbl" >
 			<comment><![CDATA[teams in the bristol league]]></comment>
 			<column name="id" prior="team_id" type="integer" jt="4" mandatory="y" />
@@ -69,9 +81,6 @@
 			<column name="rubbers_against" type="integer" jt="4" />
 			<column name="points_for" prior="points" type="integer" jt="4" />
 			<column name="points_against" type="integer" jt="4" />
-			<column name="penalties" type="integer" jt="4" >
-				<defo><![CDATA[0]]></defo>
-			</column>
 			<column name="club_id" type="integer" jt="4" />
 			<column name="division_id" type="integer" jt="4" />
 			<index name="pk_teams" unique="PRIMARY_KEY" >
@@ -89,6 +98,7 @@
 		<entity schema="scorecards" name="clubs" color="C1D8EE" x="48" y="48" />
 		<entity schema="scorecards" name="divisions" color="C1D8EE" x="48" y="208" />
 		<entity schema="scorecards" name="matches" color="C1D8EE" x="624" y="96" />
+		<entity schema="scorecards" name="penalties" color="C1D8EE" x="336" y="384" />
 		<entity schema="scorecards" name="teams" color="C1D8EE" x="336" y="96" />
 	</layout>
 </project>
