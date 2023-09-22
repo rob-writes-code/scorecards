@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request, session
 from datetime import timedelta
 
 app = Flask(__name__)
-app.secret_key = "hello"
+app.secret_key = "test"
 app.permanent_session_lifetime = timedelta(days=5)
 
 @app.route('/')
