@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="scorecards" id="Project-1f43" database="PostgreSQL" >
+	<comment><![CDATA[Badminton League Scorecards Project]]></comment>
+	<schema name="scorecards" >
+		<table name="clubs" prior="tbl" >
+			<comment><![CDATA[badminton clubs in the bristol league]]></comment>
+			<column name="id" prior="club_id" type="integer" jt="4" mandatory="y" />
+			<column name="name" prior="club_name" type="varchar" length="100" jt="12" />
+			<column name="address" type="varchar" length="100" jt="12" />
+			<column name="account_username" prior="username" type="varchar" length="100" jt="12" />
+			<column name="account_password" type="varchar" jt="12" />
+			<index name="pk_clubs" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="divisions" prior="divi" >
+			<comment><![CDATA[divisions in the league]]></comment>
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="league" type="varchar" length="50" jt="12" >
+				<comment><![CDATA[open, mixed, ladies or singles]]></comment>
+			</column>
+			<column name="division_number" type="integer" jt="4" />
+			<index name="pk_divisions" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="matches" prior="tbl" >
+			<comment><![CDATA[matches played in the league]]></comment>
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="match_date" type="date" jt="91" >
+				<defo><![CDATA[CURRENT_DATE]]></defo>
+			</column>
+			<column name="home_team_id" prior="home_team" type="integer" jt="4" />
+			<column name="away_team_id" prior="away_team" type="integer" jt="4" />
+			<column name="division_id" type="integer" jt="4" />
+			<column name="home_players" type="varchar[]" jt="2003" >
+				<comment><![CDATA[list containing 4 home player names]]></comment>
+			</column>
+			<column name="home_be_numbers" type="integer[]" jt="2003" />
+			<column name="away_players" type="varchar[]" jt="2003" >
+				<comment><![CDATA[list containing 4 away player names]]></comment>
+			</column>
+			<column name="away_be_numbers" type="integer[]" jt="2003" />
+			<column name="home_points" type="integer" jt="4" />
+			<column name="home_games" type="integer" jt="4" />
+			<column name="home_sets" type="integer" jt="4" />
+			<column name="away_points" type="integer" jt="4" />
+			<column name="away_games" type="integer" jt="4" />
+			<column name="away_sets" type="integer" jt="4" />
+			<column name="scorecard_approved" type="boolean" jt="16" />
+			<index name="pk_matches" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_matches_teams_home" to_schema="scorecards" to_table="teams" >
+				<fk_column name="home_team_id" pk="id" />
+			</fk>
+			<fk name="fk_matches_teams_away" to_schema="scorecards" to_table="teams" >
+				<fk_column name="away_team_id" pk="id" />
+			</fk>
+			<fk name="fk_matches_divisions" to_schema="scorecards" to_table="divisions" >
+				<fk_column name="division_id" pk="id" />
+			</fk>
+		</table>
+		<table name="teams" prior="tbl" >
+			<comment><![CDATA[teams in the bristol league]]></comment>
+			<column name="id" prior="team_id" type="integer" jt="4" mandatory="y" />
+			<column name="matches_played" type="integer" jt="4" />
+			<column name="rubbers_for" type="integer" jt="4" />
+			<column name="rubbers_against" type="integer" jt="4" />
+			<column name="points_for" prior="points" type="integer" jt="4" />
+			<column name="points_against" type="integer" jt="4" />
+			<column name="penalties" type="integer" jt="4" >
+				<defo><![CDATA[0]]></defo>
+			</column>
+			<column name="club_id" type="integer" jt="4" />
+			<column name="division_id" type="integer" jt="4" />
+			<index name="pk_teams" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_teams_clubs" to_schema="scorecards" to_table="clubs" >
+				<fk_column name="club_id" pk="id" />
+			</fk>
+			<fk name="fk_teams_divisions" to_schema="scorecards" to_table="divisions" >
+				<fk_column name="division_id" pk="id" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout-1b4f" show_relation="columns" >
+		<entity schema="scorecards" name="clubs" color="C1D8EE" x="48" y="48" />
+		<entity schema="scorecards" name="divisions" color="C1D8EE" x="48" y="208" />
+		<entity schema="scorecards" name="matches" color="C1D8EE" x="624" y="96" />
+		<entity schema="scorecards" name="teams" color="C1D8EE" x="336" y="96" />
+	</layout>
+</project>
