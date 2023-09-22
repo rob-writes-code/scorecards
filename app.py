@@ -1,7 +1,9 @@
 from flask import Flask, render_template, redirect, url_for, request, session
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = "hello"
+app.permanent_session_lifetime = timedelta(days=5)
 
 @app.route('/')
 def index():
@@ -14,6 +16,7 @@ def admin():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == "POST":
+        session.permanent = True
         # to access info from a form: dict key relates to input name on html form
         user = request.form["nm"]
         session["user"] = user
