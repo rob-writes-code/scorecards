@@ -1,8 +1,12 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "test"
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 app.permanent_session_lifetime = timedelta(days=5)
 
 @app.route('/')
