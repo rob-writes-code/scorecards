@@ -9,6 +9,8 @@ app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 app.permanent_session_lifetime = timedelta(days=5)
 
+# Home / Index page
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -16,6 +18,8 @@ def index():
 @app.route("/admin")
 def admin():
     return redirect(url_for("index"))
+
+# User pages
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -46,6 +50,12 @@ def user():
     else:
         flash("You are not logged in!", "info")
         return redirect(url_for("login"))
+    
+# Club accounts management
+
+@app.route('/clubs')
+def clubs():
+    return render_template("clubs.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
